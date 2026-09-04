@@ -1,0 +1,81 @@
+name: Nhật ký đọc báo cáo
+
+# Hai đường vào:
+#   1. Bạn bấm link "✅ Đánh dấu đã đọc" ở cuối báo cáo -> tạo issue -> job này
+#      cập nhật nhật ký rồi đóng issue.
+#   2. Routine ghi báo cáo mới vào trends/reports/ -> job này nạp vào nhật ký và
+#      gắn footer (link bấm) cho báo cáo mới.
+on:
+  issues:
+    types: [opened]
+  push:
+    paths:
+      - 'trends/reports/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+# Không cho hai lần chạy cùng ghi vào nhật ký một lúc.
+concurrency:
+  group: reading-log
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Xử lý issue "đã đọc" / "bỏ qua"
+        id: issue
+        if: github.event_name == 'issues'
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: python3 scripts/reading-log.py from-issue
+
+      - name: Nạp báo cáo mới và gắn footer
+        run: |
+          python3 scripts/reading-log.py footers
+          python3 scripts/reading-log.py sync
+
+      - name: Commit nếu có thay đổi
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Không có gì thay đổi."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "reading-log: cập nhật tiến độ đọc [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            echo "Đẩy thất bại, thử lại lần $i..."
+            sleep $((i * 3))
+          done
+          exit 1
+
+      # Nội dung comment đi qua biến môi trường, không nội suy thẳng vào shell:
+      # thân issue là dữ liệu do người ngoài gõ được.
+      - name: Trả lời issue
+        if: github.event_name == 'issues' && steps.issue.outputs.has_comment == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          COMMENT: ${{ steps.issue.outputs.comment }}
+        run: gh issue comment "$NUMBER" --repo "$REPO" --body "$COMMENT"
+
+      - name: Đóng issue khi đã ghi nhận xong
+        if: github.event_name == 'issues' && steps.issue.outputs.updated == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: gh issue close "$NUMBER" --repo "$REPO" --reason completed
