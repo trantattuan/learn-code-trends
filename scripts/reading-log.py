@@ -11,6 +11,8 @@ Chỉ dùng thư viện chuẩn. Cách dùng:
     ./scripts/reading-log.py reading 2026-08-16
     ./scripts/reading-log.py skip 2026-08-02
     ./scripts/reading-log.py reset 2026-08-02
+    ./scripts/reading-log.py footers          # gắn link "đã đọc" vào cuối mỗi báo cáo
+    ./scripts/reading-log.py from-issue       # xử lý issue bấm từ GitHub (dùng trong CI)
 """
 
 from __future__ import annotations
@@ -19,9 +21,11 @@ import argparse
 import datetime as dt
 import os
 import re
+import secrets
 import shutil
 import subprocess
 import sys
+import urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -197,7 +201,7 @@ def render_progress(rows: list[dict]) -> str:
         lines.append(f"**👉 Đọc tiếp:** [{nxt['date']}](reports/{nxt['date']}.md){tag}")
         if len(pending) > 1:
             rest = ", ".join(r["date"] for r in pending[1:])
-            lines.append(f"**Còn tồn:** {len(pending) - 1} báo cáo — {rest}")
+            lines.append(f"**Sau đó còn:** {len(pending) - 1} báo cáo — {rest}")
     else:
         lines.append("**👉 Đọc tiếp:** không còn báo cáo nào tồn đọng. 🎉")
     lines.append("")
@@ -267,6 +271,124 @@ def open_report(text: str, token: str) -> str:
     return replace_block(text, "table", render_rows(rows))
 
 
+FOOTER_MARK = "<!-- reading-log:footer -->"
+ISSUE_MARK_RE = re.compile(r"<!--\s*reading-log:(?P<action>read|skip)\s+(?P<date>\d{4}-\d{2}-\d{2})\s*-->")
+
+
+def repo_slug() -> str:
+    """owner/repo — lấy từ GITHUB_REPOSITORY hoặc git remote."""
+    env = os.environ.get("GITHUB_REPOSITORY")
+    if env:
+        return env
+    try:
+        url = subprocess.run(
+            ["git", "-C", str(ROOT), "config", "--get", "remote.origin.url"],
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        fail("không xác định được repo (thiếu GITHUB_REPOSITORY và git remote).")
+    m = re.search(r"[:/]([^/:]+/[^/]+?)(?:\.git)?$", url)
+    if not m:
+        fail(f"không đọc được owner/repo từ remote: {url}")
+    return m.group(1)
+
+
+def issue_url(slug: str, action: str, date: str) -> str:
+    verb = "Đã đọc" if action == "read" else "Bỏ qua"
+    icon = "✅" if action == "read" else "⏭️"
+    body = (
+        f"<!-- reading-log:{action} {date} -->\n"
+        "<!-- Đừng xoá dòng trên — nó cho máy biết bạn nói về báo cáo nào. -->\n\n"
+        "Ghi chú (không bắt buộc — viết dưới dòng này rồi bấm nút tạo issue):\n"
+    )
+    q = urllib.parse.urlencode(
+        {"title": f"{icon} {verb} báo cáo {date}", "body": body, "labels": "reading-log"},
+        quote_via=urllib.parse.quote,
+    )
+    return f"https://github.com/{slug}/issues/new?{q}"
+
+
+def footer_for(slug: str, date: str) -> str:
+    return f"""
+---
+
+{FOOTER_MARK}
+
+### Đọc xong báo cáo này?
+
+Bấm một link dưới đây, GitHub mở sẵn form — bạn chỉ cần bấm nút tạo issue là xong
+(muốn ghi chú thì gõ thêm vào ô nội dung trước khi bấm). Nhật ký sẽ tự cập nhật và
+issue tự đóng lại sau khoảng một phút.
+
+[✅ Đánh dấu đã đọc]({issue_url(slug, "read", date)}) &nbsp;·&nbsp; [⏭️ Bỏ qua tuần này]({issue_url(slug, "skip", date)}) &nbsp;·&nbsp; [📖 Xem toàn bộ tiến độ](../READING-LOG.md)
+"""
+
+
+def add_footers() -> list[str]:
+    """Gắn footer vào mọi báo cáo chưa có. Idempotent."""
+    slug = repo_slug()
+    touched = []
+    for date in report_dates():
+        path = REPORTS / f"{date}.md"
+        body = path.read_text(encoding="utf-8")
+        if FOOTER_MARK in body:
+            continue
+        path.write_text(body.rstrip("\n") + "\n" + footer_for(slug, date), encoding="utf-8")
+        touched.append(date)
+    return touched
+
+
+def clean_note(body: str) -> str:
+    """Lấy ghi chú người dùng gõ trong issue, bỏ marker và dòng hướng dẫn."""
+    text = re.sub(r"<!--.*?-->", "", body or "", flags=re.S)
+    lines = [
+        ln.strip() for ln in text.splitlines()
+        if ln.strip() and not ln.strip().startswith("Ghi chú (không bắt buộc")
+    ]
+    note = " ".join(lines).replace("|", "/")
+    return note[:200]
+
+
+def from_issue(text: str) -> tuple[str, str]:
+    """Đọc ISSUE_TITLE/ISSUE_BODY, cập nhật nhật ký. Trả về (text mới, thông báo)."""
+    title = os.environ.get("ISSUE_TITLE", "")
+    body = os.environ.get("ISSUE_BODY", "")
+
+    m = ISSUE_MARK_RE.search(body)
+    if m:
+        action, date = m.group("action"), m.group("date")
+    else:  # dự phòng khi marker bị xoá: đoán từ tiêu đề
+        d = re.search(r"\d{4}-\d{2}-\d{2}", title)
+        if not d:
+            return text, ""
+        date = d.group(0)
+        action = "skip" if ("Bỏ qua" in title or "⏭" in title) else "read"
+
+    rows = parse_rows(text)
+    if date not in {r["date"] for r in rows}:
+        return text, f"__NOTFOUND__Không tìm thấy báo cáo `{date}` trong nhật ký."
+
+    note = clean_note(body)
+    status = READ if action == "read" else SKIPPED
+    for r in rows:
+        if r["date"] == date:
+            r["status"] = status
+            r["read_on"] = dt.date.today().isoformat() if action == "read" else "—"
+            if note:
+                r["note"] = f"{r['note']} {note}".strip()
+
+    text = replace_block(text, "table", render_rows(rows))
+    pending = [r for r in parse_rows(text) if r["status"] not in (READ, SKIPPED)]
+    slug = repo_slug()
+    nxt = (
+        f"👉 Đọc tiếp: [{pending[0]['date']}]"
+        f"(https://github.com/{slug}/blob/main/trends/reports/{pending[0]['date']}.md)"
+        f" — còn {len(pending)} báo cáo tồn đọng."
+        if pending else "Hết báo cáo tồn đọng. 🎉"
+    )
+    return text, f"Đã ghi nhận: **{date} → {status}**." + (f" Ghi chú: _{note}_" if note else "") + f"\n\n{nxt}"
+
+
 def print_status(rows: list[dict]) -> None:
     print(render_progress(rows).strip())
     print()
@@ -280,6 +402,8 @@ def main() -> None:
     sub.add_parser("status", help="xem tiến độ (mặc định)")
     sub.add_parser("sync", help="nạp báo cáo mới vào nhật ký")
     sub.add_parser("next", help="in đường dẫn báo cáo chưa đọc cũ nhất")
+    sub.add_parser("footers", help="gắn link 'đã đọc' vào cuối mỗi báo cáo")
+    sub.add_parser("from-issue", help="xử lý issue bấm từ GitHub (ISSUE_TITLE/ISSUE_BODY)")
     p_open = sub.add_parser("open", help="mở báo cáo tiếp theo và tự đánh dấu khi đọc xong")
     p_open.add_argument("date", nargs="?", default="next", help="YYYY-MM-DD, 'next' (mặc định) hoặc 'latest'")
     for name, helptext in (
@@ -299,7 +423,25 @@ def main() -> None:
     text = read_log()
     text, added = sync(text)
 
-    if cmd == "open":
+    if cmd == "footers":
+        touched = add_footers()
+        print(f"Đã gắn footer cho {len(touched)} báo cáo: {', '.join(touched)}" if touched
+              else "Mọi báo cáo đã có footer.")
+    elif cmd == "from-issue":
+        text, message = from_issue(text)
+        updated = bool(message) and not message.startswith("__NOTFOUND__")
+        message = message.replace("__NOTFOUND__", "")
+        out = os.environ.get("GITHUB_OUTPUT")
+        if out:
+            # Dấu phân cách ngẫu nhiên: ghi chú do người dùng gõ không đoán được
+            # nên không tự chèn thêm output khác được.
+            delim = f"EOF_{secrets.token_hex(16)}"
+            with open(out, "a", encoding="utf-8") as fh:
+                fh.write(f"updated={'true' if updated else 'false'}\n")
+                fh.write(f"has_comment={'true' if message else 'false'}\n")
+                fh.write(f"comment<<{delim}\n" + (message or "") + f"\n{delim}\n")
+        print(message or "Issue không liên quan tới nhật ký — bỏ qua.")
+    elif cmd == "open":
         text = open_report(text, args.date)
     elif cmd in STATUSES:
         rows = parse_rows(text)

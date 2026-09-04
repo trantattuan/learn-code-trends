@@ -9,6 +9,10 @@ Không cần nhớ gì. Mỗi lần quay lại chỉ cần chạy:
 ./scripts/reading-log.py open       # mở ra đọc, xong nó tự hỏi để đánh dấu
 ```
 
+Đọc trên GitHub thì không cần terminal: cuối mỗi báo cáo có link
+**✅ Đánh dấu đã đọc** / **⏭️ Bỏ qua tuần này** — bấm vào, bấm nút tạo issue, xong.
+Bảng dưới đây tự cập nhật và issue tự đóng.
+
 Không cần sửa bảng bằng tay. `open` đánh dấu "đang đọc" ngay lúc mở nên bỏ dở
 giữa chừng cũng không mất dấu; đọc xong thoát ra là nó hỏi một câu để chốt.
 Muốn đánh dấu rời thì dùng `read next` / `read 2026-08-09 --note "..."`.
@@ -21,7 +25,7 @@ script chỉ thêm dòng mới và đổi cột trạng thái, không đụng v�
 **Tiến độ:** 0/6 báo cáo đã xử lý.
 **Đọc gần nhất:** chưa có.
 **👉 Đọc tiếp:** [2026-07-29](reports/2026-07-29.md)
-**Còn tồn:** 5 báo cáo — 2026-08-02, 2026-08-09, 2026-08-16, 2026-08-23, 2026-08-30
+**Sau đó còn:** 5 báo cáo — 2026-08-02, 2026-08-09, 2026-08-16, 2026-08-23, 2026-08-30
 <!-- progress:end -->
 
 ## Bảng tiến độ

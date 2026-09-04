@@ -32,3 +32,17 @@ Báo cáo mới do routine ghi vào `trends/reports/` sẽ tự xuất hiện tr
 Bạn không phải sửa bảng bằng tay. `open` là cách ít thao tác nhất: nó mở báo cáo
 chưa đọc cũ nhất, đánh dấu "đang đọc" ngay lúc mở (nên có bỏ dở giữa chừng cũng
 không mất dấu), đọc xong thoát ra thì hỏi một câu để chốt trạng thái và ghi chú.
+
+### Đánh dấu ngay trên GitHub (không cần terminal)
+
+Cuối mỗi báo cáo có hai link: **✅ Đánh dấu đã đọc** và **⏭️ Bỏ qua tuần này**.
+Bấm vào là GitHub mở sẵn form issue (điền sẵn tiêu đề, ngày báo cáo và chỗ ghi
+chú) — bạn chỉ cần bấm nút tạo issue. Workflow `.github/workflows/reading-log.yml`
+sẽ cập nhật `trends/READING-LOG.md`, trả lời kèm link báo cáo tiếp theo, rồi tự
+đóng issue. Làm được trên điện thoại.
+
+Workflow đó cũng chạy khi routine đẩy báo cáo mới: nó nạp báo cáo vào nhật ký và
+gắn sẵn hai link trên vào cuối file, nên không cần bảo trì gì thêm.
+
+> Cần bật một lần: **Settings → Actions → General → Workflow permissions** chọn
+> *Read and write permissions*, nếu không workflow sẽ không commit được nhật ký.
