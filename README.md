@@ -17,6 +17,7 @@ ghi chú gì. Không cần nhớ — mở file đó ra là thấy ngay dòng **�
 
 ```bash
 ./scripts/reading-log.py            # tiến độ + báo cáo cần đọc tiếp
+./scripts/reading-log.py open       # mở báo cáo tiếp theo, đọc xong tự hỏi để đánh dấu
 ./scripts/reading-log.py next       # chỉ in đường dẫn báo cáo chưa đọc cũ nhất
 ./scripts/reading-log.py read next --note "đã áp dụng X"   # đọc xong thì đánh dấu
 ./scripts/reading-log.py reading 2026-08-16                # đọc dở, để dành
@@ -27,3 +28,7 @@ ghi chú gì. Không cần nhớ — mở file đó ra là thấy ngay dòng **�
 Báo cáo mới do routine ghi vào `trends/reports/` sẽ tự xuất hiện trong nhật ký
 ở lần chạy script kế tiếp, kèm sẵn tiêu đề 3 chủ đề. Script chỉ thêm dòng mới và
 đổi cột trạng thái — ghi chú bạn viết tay trong file không bị đụng tới.
+
+Bạn không phải sửa bảng bằng tay. `open` là cách ít thao tác nhất: nó mở báo cáo
+chưa đọc cũ nhất, đánh dấu "đang đọc" ngay lúc mở (nên có bỏ dở giữa chừng cũng
+không mất dấu), đọc xong thoát ra thì hỏi một câu để chốt trạng thái và ghi chú.

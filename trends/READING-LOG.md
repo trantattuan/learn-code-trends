@@ -6,8 +6,12 @@ Không cần nhớ gì. Mỗi lần quay lại chỉ cần chạy:
 
 ```bash
 ./scripts/reading-log.py            # tiến độ + báo cáo cần đọc tiếp
-./scripts/reading-log.py read next  # đọc xong thì đánh dấu
+./scripts/reading-log.py open       # mở ra đọc, xong nó tự hỏi để đánh dấu
 ```
+
+Không cần sửa bảng bằng tay. `open` đánh dấu "đang đọc" ngay lúc mở nên bỏ dở
+giữa chừng cũng không mất dấu; đọc xong thoát ra là nó hỏi một câu để chốt.
+Muốn đánh dấu rời thì dùng `read next` / `read 2026-08-09 --note "..."`.
 
 Script tự quét `trends/reports/`, tự thêm báo cáo mới vào bảng dưới và tự cập
 nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể sửa tay thoải mái —

@@ -17,7 +17,10 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import os
 import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -225,6 +228,45 @@ def resolve(rows: list[dict], token: str) -> str:
     return token
 
 
+def open_report(text: str, token: str) -> str:
+    """Mở báo cáo để đọc, tự đánh dấu 'đang đọc', đọc xong thì hỏi để chốt lại."""
+    rows = parse_rows(text)
+    date = resolve(rows, token)
+    path = REPORTS / f"{date}.md"
+
+    for r in rows:
+        if r["date"] == date and r["status"] == UNREAD:
+            r["status"] = READING
+    text = replace_block(text, "table", render_rows(rows))
+    save(text)
+
+    if not (sys.stdin.isatty() and sys.stdout.isatty()):
+        print(f"(không phải terminal tương tác — đã đánh dấu đang đọc)\n{path}")
+        return LOG.read_text(encoding="utf-8")
+
+    pager = os.environ.get("PAGER") or ("less" if shutil.which("less") else "cat")
+    subprocess.run([*pager.split(), str(path)], check=False)
+
+    answer = input(f"\nĐã đọc xong {date} chưa? [Y/n/s(bỏ qua)] ").strip().lower()
+    if answer.startswith("n"):
+        print(f"{date}: {READING} — để dành, lần sau chạy 'read next' là quay lại đúng chỗ.")
+        return LOG.read_text(encoding="utf-8")
+
+    status = SKIPPED if answer.startswith("s") else READ
+    note = input("Ghi chú nhanh (Enter để bỏ trống): ").strip()
+
+    text = LOG.read_text(encoding="utf-8")
+    rows = parse_rows(text)
+    for r in rows:
+        if r["date"] == date:
+            r["status"] = status
+            r["read_on"] = dt.date.today().isoformat() if status == READ else "—"
+            if note:
+                r["note"] = f"{r['note']} {note}".strip()
+    print(f"{date}: {status}")
+    return replace_block(text, "table", render_rows(rows))
+
+
 def print_status(rows: list[dict]) -> None:
     print(render_progress(rows).strip())
     print()
@@ -238,6 +280,8 @@ def main() -> None:
     sub.add_parser("status", help="xem tiến độ (mặc định)")
     sub.add_parser("sync", help="nạp báo cáo mới vào nhật ký")
     sub.add_parser("next", help="in đường dẫn báo cáo chưa đọc cũ nhất")
+    p_open = sub.add_parser("open", help="mở báo cáo tiếp theo và tự đánh dấu khi đọc xong")
+    p_open.add_argument("date", nargs="?", default="next", help="YYYY-MM-DD, 'next' (mặc định) hoặc 'latest'")
     for name, helptext in (
         ("read", "đánh dấu đã đọc"),
         ("reading", "đánh dấu đang đọc dở"),
@@ -255,7 +299,9 @@ def main() -> None:
     text = read_log()
     text, added = sync(text)
 
-    if cmd in STATUSES:
+    if cmd == "open":
+        text = open_report(text, args.date)
+    elif cmd in STATUSES:
         rows = parse_rows(text)
         date = resolve(rows, args.date)
         for r in rows:
