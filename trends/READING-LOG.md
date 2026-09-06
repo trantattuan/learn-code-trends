@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 1/6 báo cáo đã xử lý.
+**Tiến độ:** 1/7 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-07-29](reports/2026-07-29.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 4 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-08-30
+**Sau đó còn:** 5 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-08-30, 2026-09-06
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -41,6 +41,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-08-16](reports/2026-08-16.md) | ⬜ Chưa đọc | — |  |
 | [2026-08-23](reports/2026-08-23.md) | ⬜ Chưa đọc | — |  |
 | [2026-08-30](reports/2026-08-30.md) | ⬜ Chưa đọc | — |  |
+| [2026-09-06](reports/2026-09-06.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -106,6 +107,15 @@ việc cần làm.
 1. `--restricted`: tầng năng lực (capability tier) tách khỏi chính sách phê duyệt (permission mode)
 2. Prompt cache TTL trở thành một field trong định nghĩa agent — và cache lần đầu đo được
 3. Model switch trở thành sự kiện quản trị được — kèm một thay đổi ngữ nghĩa âm thầm ở `CLAUDE_CODE_SUBAGENT_MODEL`
+
+**Ghi chú của tôi:**
+-
+
+### 2026-09-06
+
+1. `/skill-doctor`: chi phí context của thư viện tri thức trở thành số đo được — và cắt được
+2. Bốn cách một permission rule âm thầm không có hiệu lực — và bước chuyển của chuỗi cấu hình sang *fail-closed*
+3. `--permission-prompts none`: chạy không người trực trở thành một chế độ hạng nhất, với ngữ nghĩa từ chối được định nghĩa rõ
 
 **Ghi chú của tôi:**
 -
