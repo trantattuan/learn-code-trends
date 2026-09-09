@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 1/7 báo cáo đã xử lý.
-**Đọc gần nhất:** [2026-07-29](reports/2026-07-29.md)
+**Tiến độ:** 2/7 báo cáo đã xử lý.
+**Đọc gần nhất:** [2026-09-06](reports/2026-09-06.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 5 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-08-30, 2026-09-06
+**Sau đó còn:** 4 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-08-30
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -41,7 +41,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-08-16](reports/2026-08-16.md) | ⬜ Chưa đọc | — |  |
 | [2026-08-23](reports/2026-08-23.md) | ⬜ Chưa đọc | — |  |
 | [2026-08-30](reports/2026-08-30.md) | ⬜ Chưa đọc | — |  |
-| [2026-09-06](reports/2026-09-06.md) | ⬜ Chưa đọc | — |  |
+| [2026-09-06](reports/2026-09-06.md) | ✅ Đã đọc | 2026-09-09 |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
