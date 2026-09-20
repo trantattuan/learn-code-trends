@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 2/8 báo cáo đã xử lý.
+**Tiến độ:** 2/9 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-09-06](reports/2026-09-06.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 5 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-08-30, 2026-09-13
+**Sau đó còn:** 6 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-08-30, 2026-09-13, 2026-09-20
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -43,6 +43,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-08-30](reports/2026-08-30.md) | ⬜ Chưa đọc | — |  |
 | [2026-09-06](reports/2026-09-06.md) | ✅ Đã đọc | 2026-09-09 |  |
 | [2026-09-13](reports/2026-09-13.md) | ⬜ Chưa đọc | — |  |
+| [2026-09-20](reports/2026-09-20.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -126,6 +127,15 @@ việc cần làm.
 1. `claude plugin eval`: chất lượng của một skill trở thành con số có đối chứng — và con số đó là **Δ**, không phải điểm tuyệt đối
 2. `ant apply` + `claude-lock.json`: toàn bộ đội hình agent trở thành file trong repo, có lockfile, có phát hiện trôi cấu hình
 3. Permission policy `auto` cho Managed Agents: classifier chuyển vào server, quyết định thành **dữ liệu trong event stream** — và biên giới tin cậy của nó là kênh `user.message`
+
+**Ghi chú của tôi:**
+-
+
+### 2026-09-20
+
+1. "Mods": Claude Code mở chính cái lõi của nó ra làm middleware — và `AGENTS.md` là tính năng lớn đầu tiên được ship **dưới dạng plugin, không phải dưới dạng tính năng**
+2. Compaction theo yêu cầu (`compact-2026-09-04`): quản lý context chuyển từ *chuyện xảy ra với bạn* thành *một lời gọi API bạn chủ động đặt lịch* — và bản tóm tắt được **ký**
+3. Skills và plugins bật trên tài khoản claude.ai nay **tự chảy vào phiên terminal** — và cập nhật giữa phiên, mỗi 10 phút, không cần khởi động lại
 
 **Ghi chú của tôi:**
 -
