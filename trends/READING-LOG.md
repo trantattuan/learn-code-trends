@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 4/9 báo cáo đã xử lý.
+**Tiến độ:** 4/10 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-09-13](reports/2026-09-13.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 4 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-09-20
+**Sau đó còn:** 5 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-09-20, 2026-09-27
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -44,6 +44,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-09-06](reports/2026-09-06.md) | ✅ Đã đọc | 2026-09-09 |  |
 | [2026-09-13](reports/2026-09-13.md) | ✅ Đã đọc | 2026-09-27 |  |
 | [2026-09-20](reports/2026-09-20.md) | ⬜ Chưa đọc | — |  |
+| [2026-09-27](reports/2026-09-27.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -136,6 +137,15 @@ việc cần làm.
 1. "Mods": Claude Code mở chính cái lõi của nó ra làm middleware — và `AGENTS.md` là tính năng lớn đầu tiên được ship **dưới dạng plugin, không phải dưới dạng tính năng**
 2. Compaction theo yêu cầu (`compact-2026-09-04`): quản lý context chuyển từ *chuyện xảy ra với bạn* thành *một lời gọi API bạn chủ động đặt lịch* — và bản tóm tắt được **ký**
 3. Skills và plugins bật trên tài khoản claude.ai nay **tự chảy vào phiên terminal** — và cập nhật giữa phiên, mỗi 10 phút, không cần khởi động lại
+
+**Ghi chú của tôi:**
+-
+
+### 2026-09-27
+
+1. Opus 5.5: giá cache read giảm 60% và effort mặc định tụt `high` → `medium` — cấu trúc chi phí của một agent chạy dài **đổi hình dạng**, không chỉ đổi mức
+2. Preserved thinking: hội thoại trở thành **append-only log được ràng buộc bằng mật mã** — và bốn harness độc lập vỡ ngoài thực địa
+3. `/doctor prompt-audit`: thư viện tri thức chính thức là **artifact theo từng model**, có công cụ phát hiện mục rữa — và một dòng CLAUDE.md cũ giờ **bị tính tiền**
 
 **Ghi chú của tôi:**
 -
