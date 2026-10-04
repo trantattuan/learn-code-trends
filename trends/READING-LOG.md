@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 4/10 báo cáo đã xử lý.
+**Tiến độ:** 4/11 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-09-13](reports/2026-09-13.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 5 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-09-20, 2026-09-27
+**Sau đó còn:** 6 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-09-20, 2026-09-27, 2026-10-04
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -45,6 +45,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-09-13](reports/2026-09-13.md) | ✅ Đã đọc | 2026-09-27 |  |
 | [2026-09-20](reports/2026-09-20.md) | ⬜ Chưa đọc | — |  |
 | [2026-09-27](reports/2026-09-27.md) | ⬜ Chưa đọc | — |  |
+| [2026-10-04](reports/2026-10-04.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -146,6 +147,15 @@ việc cần làm.
 1. Opus 5.5: giá cache read giảm 60% và effort mặc định tụt `high` → `medium` — cấu trúc chi phí của một agent chạy dài **đổi hình dạng**, không chỉ đổi mức
 2. Preserved thinking: hội thoại trở thành **append-only log được ràng buộc bằng mật mã** — và bốn harness độc lập vỡ ngoài thực địa
 3. `/doctor prompt-audit`: thư viện tri thức chính thức là **artifact theo từng model**, có công cụ phát hiện mục rữa — và một dòng CLAUDE.md cũ giờ **bị tính tiền**
+
+**Ghi chú của tôi:**
+-
+
+### 2026-10-04
+
+1. Cả thế hệ `5.5` / `5.1` tháo bỏ hai công tắc điều khiển model từ bên ngoài — `tool_choice` cưỡng chế và `thinking: disabled` — và thứ ba đổi âm thầm không báo lỗi
+2. Cửa sổ context 1M thành mặc định ngầm và hậu tố `[1m]` biến mất — context window chuyển từ *thứ bạn khai báo* sang *thứ client thương lượng với server lúc chạy*, với "autocompact thrashing" là chế độ lỗi mới
+3. Rule theo đường dẫn và nested CLAUDE.md **không nạp khi Claude *ghi* file** — chỉ khi *đọc* — cho tới v2.1.288; và quy ước skill tên `verify` biến tên thư mục thành cấu hình
 
 **Ghi chú của tôi:**
 -
