@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 6/11 báo cáo đã xử lý.
+**Tiến độ:** 6/12 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-09-27](reports/2026-09-27.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 4 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04
+**Sau đó còn:** 5 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04, 2026-10-11
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -46,6 +46,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-09-20](reports/2026-09-20.md) | ✅ Đã đọc | 2026-10-10 |  |
 | [2026-09-27](reports/2026-09-27.md) | ✅ Đã đọc | 2026-10-10 |  |
 | [2026-10-04](reports/2026-10-04.md) | ⬜ Chưa đọc | — |  |
+| [2026-10-11](reports/2026-10-11.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -156,6 +157,15 @@ việc cần làm.
 1. Cả thế hệ `5.5` / `5.1` tháo bỏ hai công tắc điều khiển model từ bên ngoài — `tool_choice` cưỡng chế và `thinking: disabled` — và thứ ba đổi âm thầm không báo lỗi
 2. Cửa sổ context 1M thành mặc định ngầm và hậu tố `[1m]` biến mất — context window chuyển từ *thứ bạn khai báo* sang *thứ client thương lượng với server lúc chạy*, với "autocompact thrashing" là chế độ lỗi mới
 3. Rule theo đường dẫn và nested CLAUDE.md **không nạp khi Claude *ghi* file** — chỉ khi *đọc* — cho tới v2.1.288; và quy ước skill tên `verify` biến tên thư mục thành cấu hình
+
+**Ghi chú của tôi:**
+-
+
+### 2026-10-11
+
+1. Tầng chốt chặn của agent vốn **fail-open** — `onFailure: "block"` (v2.1.295) vá được phần lớn, nhưng đúng cái cổng quan trọng nhất (`Stop`) thì **không hook nào che được**
+2. Claude Haiku 5.5 (07/10): tầng rẻ thôi là "model yếu hơn" và thành **hạ tầng bên trong một agent run** — nhưng nó là model duy nhất của dòng hiện tại **có vách giá ở 100K token**, và ba cơ chế cùng đẩy agent qua vách đó
+3. Anthropic công bố phân loại chính thức cho "agent lách rào thay vì dừng lại" (09/10) — và biện pháp của chính họ là **bỏ năng lực**, không phải prompt tốt hơn
 
 **Ghi chú của tôi:**
 -
