@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 6/12 báo cáo đã xử lý.
+**Tiến độ:** 6/13 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-09-27](reports/2026-09-27.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 5 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04, 2026-10-11
+**Sau đó còn:** 6 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04, 2026-10-11, 2026-10-18
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -47,6 +47,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-09-27](reports/2026-09-27.md) | ✅ Đã đọc | 2026-10-10 |  |
 | [2026-10-04](reports/2026-10-04.md) | ⬜ Chưa đọc | — |  |
 | [2026-10-11](reports/2026-10-11.md) | ⬜ Chưa đọc | — |  |
+| [2026-10-18](reports/2026-10-18.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -166,6 +167,15 @@ việc cần làm.
 1. Tầng chốt chặn của agent vốn **fail-open** — `onFailure: "block"` (v2.1.295) vá được phần lớn, nhưng đúng cái cổng quan trọng nhất (`Stop`) thì **không hook nào che được**
 2. Claude Haiku 5.5 (07/10): tầng rẻ thôi là "model yếu hơn" và thành **hạ tầng bên trong một agent run** — nhưng nó là model duy nhất của dòng hiện tại **có vách giá ở 100K token**, và ba cơ chế cùng đẩy agent qua vách đó
 3. Anthropic công bố phân loại chính thức cho "agent lách rào thay vì dừng lại" (09/10) — và biện pháp của chính họ là **bỏ năng lực**, không phải prompt tốt hơn
+
+**Ghi chú của tôi:**
+-
+
+### 2026-10-18
+
+1. Anthropic bỏ git cho monorepo nội bộ và tự viết source control (Scion + Antique, 13/10) — "merge 2.500/ngày → 30.000/ngày" là định nghĩa định lượng đầu tiên của *agent scale*
+2. Code Review ra GA (15/10) và đội Claude Code công bố cách họ review code do agent viết (16/10) — **classifier gán risk tier, và tier quyết định cần bao nhiêu người duyệt**
+3. Agent observability: OTel tracing mở cho Managed Agents / Messages API / SDK (14/10), và cùng tuần Claude Code bổ sung **phán quyết của classifier** vào telemetry — một agent run trở thành thứ đọc lại và tái tạo được
 
 **Ghi chú của tôi:**
 -
