@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 6/13 báo cáo đã xử lý.
+**Tiến độ:** 6/14 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-09-27](reports/2026-09-27.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 6 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04, 2026-10-11, 2026-10-18
+**Sau đó còn:** 7 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04, 2026-10-11, 2026-10-18, 2026-10-25
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -48,6 +48,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-10-04](reports/2026-10-04.md) | ⬜ Chưa đọc | — |  |
 | [2026-10-11](reports/2026-10-11.md) | ⬜ Chưa đọc | — |  |
 | [2026-10-18](reports/2026-10-18.md) | ⬜ Chưa đọc | — |  |
+| [2026-10-25](reports/2026-10-25.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -176,6 +177,15 @@ việc cần làm.
 1. Anthropic bỏ git cho monorepo nội bộ và tự viết source control (Scion + Antique, 13/10) — "merge 2.500/ngày → 30.000/ngày" là định nghĩa định lượng đầu tiên của *agent scale*
 2. Code Review ra GA (15/10) và đội Claude Code công bố cách họ review code do agent viết (16/10) — **classifier gán risk tier, và tier quyết định cần bao nhiêu người duyệt**
 3. Agent observability: OTel tracing mở cho Managed Agents / Messages API / SDK (14/10), và cùng tuần Claude Code bổ sung **phán quyết của classifier** vào telemetry — một agent run trở thành thứ đọc lại và tái tạo được
+
+**Ghi chú của tôi:**
+-
+
+### 2026-10-25
+
+1. API version `2026-10-21` — lần đầu sau **3 năm 4 tháng** Anthropic phát hành một `anthropic-version` mới, và nó tháo `temperature`/`top_p`/`top_k` khỏi **mọi model**, tháo client-side compaction khỏi tool runner, rồi đổi license SDK từ MIT sang Apache 2.0
+2. Anthropic Applied AI công bố hướng dẫn **gộp subagent trở lại một agent loop** (22/10), kèm một repo tham chiếu — và cùng tuần, desktop app lại làm việc *sinh thêm* subagent dễ hơn. Hai dòng chảy ngược nhau, trong bốn ngày.
+3. Claude Security bản mới lên public beta (21/10): **threat model của từng project trở thành một knowledge base người sửa được, và scan sau đọc nó để quyết định cái gì đáng flag** — cộng với finding là **state bền có tự phát hiện đã-fix**, và một API + MCP connector
 
 **Ghi chú của tôi:**
 -
