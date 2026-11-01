@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 6/14 báo cáo đã xử lý.
+**Tiến độ:** 6/15 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-09-27](reports/2026-09-27.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 7 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04, 2026-10-11, 2026-10-18, 2026-10-25
+**Sau đó còn:** 8 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04, 2026-10-11, 2026-10-18, 2026-10-25, 2026-11-01
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -49,6 +49,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-10-11](reports/2026-10-11.md) | ⬜ Chưa đọc | — |  |
 | [2026-10-18](reports/2026-10-18.md) | ⬜ Chưa đọc | — |  |
 | [2026-10-25](reports/2026-10-25.md) | ⬜ Chưa đọc | — |  |
+| [2026-11-01](reports/2026-11-01.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -186,6 +187,15 @@ việc cần làm.
 1. API version `2026-10-21` — lần đầu sau **3 năm 4 tháng** Anthropic phát hành một `anthropic-version` mới, và nó tháo `temperature`/`top_p`/`top_k` khỏi **mọi model**, tháo client-side compaction khỏi tool runner, rồi đổi license SDK từ MIT sang Apache 2.0
 2. Anthropic Applied AI công bố hướng dẫn **gộp subagent trở lại một agent loop** (22/10), kèm một repo tham chiếu — và cùng tuần, desktop app lại làm việc *sinh thêm* subagent dễ hơn. Hai dòng chảy ngược nhau, trong bốn ngày.
 3. Claude Security bản mới lên public beta (21/10): **threat model của từng project trở thành một knowledge base người sửa được, và scan sau đọc nó để quyết định cái gì đáng flag** — cộng với finding là **state bền có tự phát hiện đã-fix**, và một API + MCP connector
+
+**Ghi chú của tôi:**
+-
+
+### 2026-11-01
+
+1. Anthropic công bố thử nghiệm ngẫu nhiên có đối chứng (27/10): chuyên gia đi theo "khuynh hướng" mà agent được **gieo bằng tung đồng xu** — **86%** số quyết định. Và 77% nhắc lại lập luận của agent, chỉ 15% ghi nhận là của agent.
+2. Usage and Cost Analytics API lên beta (29/10): chi phí của agent trở thành **một câu query có chiều**, gán được tới từng actor / agent / session — và API cũ bị hạ xuống **legacy** ngay trong cùng một mục release note
+3. Trong sáu ngày, `effort` chuyển từ "một giá trị của session" thành **một cái thang có nhiều tầng thương lượng với nhau** — subagent thôi kế thừa, một từ trong prompt nâng được cả lượt, và cả hai thứ đó nay có công tắc tắt
 
 **Ghi chú của tôi:**
 -
