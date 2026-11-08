@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 6/15 báo cáo đã xử lý.
+**Tiến độ:** 6/16 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-09-27](reports/2026-09-27.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 8 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04, 2026-10-11, 2026-10-18, 2026-10-25, 2026-11-01
+**Sau đó còn:** 9 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-10-04, 2026-10-11, 2026-10-18, 2026-10-25, 2026-11-01, 2026-11-08
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -50,6 +50,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-10-18](reports/2026-10-18.md) | ⬜ Chưa đọc | — |  |
 | [2026-10-25](reports/2026-10-25.md) | ⬜ Chưa đọc | — |  |
 | [2026-11-01](reports/2026-11-01.md) | ⬜ Chưa đọc | — |  |
+| [2026-11-08](reports/2026-11-08.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -196,6 +197,15 @@ việc cần làm.
 1. Anthropic công bố thử nghiệm ngẫu nhiên có đối chứng (27/10): chuyên gia đi theo "khuynh hướng" mà agent được **gieo bằng tung đồng xu** — **86%** số quyết định. Và 77% nhắc lại lập luận của agent, chỉ 15% ghi nhận là của agent.
 2. Usage and Cost Analytics API lên beta (29/10): chi phí của agent trở thành **một câu query có chiều**, gán được tới từng actor / agent / session — và API cũ bị hạ xuống **legacy** ngay trong cùng một mục release note
 3. Trong sáu ngày, `effort` chuyển từ "một giá trị của session" thành **một cái thang có nhiều tầng thương lượng với nhau** — subagent thôi kế thừa, một từ trong prompt nâng được cả lượt, và cả hai thứ đó nay có công tắc tắt
+
+**Ghi chú của tôi:**
+-
+
+### 2026-11-08
+
+1. Anthropic Engineering công bố mô hình bốn tầng của agent memory (06/11) — và dữ liệu nói **luật ghi nhớ cứng làm model mạnh kém đi**, đúng cái mà decision-library đang làm
+2. `message threads` lên public beta (02/11): hội thoại nằm trên server, client chỉ gửi lượt mới — nhưng **token không giảm, giá không giảm**, và thread **ghim chặt `model`**
+3. Auto mode bỏ **fallback về classifier nội bộ** khi telemetry/feature-flag tắt (v2.1.319, 06/11) — chạy không người trực chuyển sang **fail-closed**, và `permissions.denyInsteadOfPrompting` là nút chính thức cho việc đó
 
 **Ghi chú của tôi:**
 -
