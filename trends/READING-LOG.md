@@ -22,10 +22,10 @@ nhật phần tiến độ. Bảng và phần ghi chú bạn cũng có thể s�
 script chỉ thêm dòng mới và đổi cột trạng thái, không đụng vào ghi chú của bạn.
 
 <!-- progress:start -->
-**Tiến độ:** 11/16 báo cáo đã xử lý.
+**Tiến độ:** 11/17 báo cáo đã xử lý.
 **Đọc gần nhất:** [2026-11-01](reports/2026-11-01.md)
 **👉 Đọc tiếp:** [2026-08-02](reports/2026-08-02.md)
-**Sau đó còn:** 4 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-11-08
+**Sau đó còn:** 5 báo cáo — 2026-08-09, 2026-08-16, 2026-08-23, 2026-11-08, 2026-11-15
 <!-- progress:end -->
 
 ## Bảng tiến độ
@@ -51,6 +51,7 @@ Trạng thái: `⬜ Chưa đọc` · `🔄 Đang đọc` · `✅ Đã đọc` ·
 | [2026-10-25](reports/2026-10-25.md) | ✅ Đã đọc | 2026-11-11 |  |
 | [2026-11-01](reports/2026-11-01.md) | ✅ Đã đọc | 2026-11-11 |  |
 | [2026-11-08](reports/2026-11-08.md) | ⬜ Chưa đọc | — |  |
+| [2026-11-15](reports/2026-11-15.md) | ⬜ Chưa đọc | — |  |
 <!-- table:end -->
 
 ## Ghi chú từng báo cáo
@@ -206,6 +207,15 @@ việc cần làm.
 1. Anthropic Engineering công bố mô hình bốn tầng của agent memory (06/11) — và dữ liệu nói **luật ghi nhớ cứng làm model mạnh kém đi**, đúng cái mà decision-library đang làm
 2. `message threads` lên public beta (02/11): hội thoại nằm trên server, client chỉ gửi lượt mới — nhưng **token không giảm, giá không giảm**, và thread **ghim chặt `model`**
 3. Auto mode bỏ **fallback về classifier nội bộ** khi telemetry/feature-flag tắt (v2.1.319, 06/11) — chạy không người trực chuyển sang **fail-closed**, và `permissions.denyInsteadOfPrompting` là nút chính thức cho việc đó
+
+**Ghi chú của tôi:**
+-
+
+### 2026-11-15
+
+1. Code Mode (v2.1.323, 12/11): đơn vị hành động của agent chuyển từ **một tool call** thành **một chương trình** — và lưới kiểm duyệt chuyển theo nó, mất đi phần giá trị tính lúc chạy
+2. Fable 5.2 thành model Fable mặc định (09/11) — giá giảm 20% ở mọi dòng, nhưng **thinking block nay bị khoá vào *tài khoản* và vào *họ model***, và lựa chọn model cũ của bạn **tự chuyển** sang bản mới
+3. Trong khi `2.1.321`–`2.1.325` bịt khoảng mười lăm lỗ sandbox, **mods được cấp một đường vòng qua `ask` rule và qua cả `dontAsk`** — hệ phân quyền tách thành hai tầng, và `deny` là thứ duy nhất với tới tầng hai
 
 **Ghi chú của tôi:**
 -
